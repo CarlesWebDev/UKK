@@ -1,10 +1,19 @@
 <?php
-
 namespace App\Models;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Illuminate\Database\Eloquent\Model;
-
-class admin extends Model
+class Admin extends Authenticatable
 {
-    //
+    protected $table = 'admins';
+    protected $guard = 'admin';
+
+    protected $fillable = [
+        'email',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }

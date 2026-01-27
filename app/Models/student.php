@@ -1,10 +1,20 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Illuminate\Database\Eloquent\Model;
-
-class student extends Model
+class Student extends Authenticatable
 {
-    //
+    protected $table = 'students';
+    protected $guard = 'student';
+
+    protected $fillable = [
+        'nis',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }

@@ -13,8 +13,7 @@ class StudentSeeder extends Seeder
     {
         //
         DB:: table('students')->insert([
-            'name' => 'Student1',
-            'email' => 'student1@example.com',
+            'nis' => '12345678910',
             'password' => Hash::make('studentexample123'),
             'created_at' => now(),
             'updated_at' => now(),

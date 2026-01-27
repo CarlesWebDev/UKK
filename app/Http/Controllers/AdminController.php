@@ -10,9 +10,12 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function ShowLoginForm()
     {
-        //
+        if(auth()->guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('auth.adminlogin');
     }
 
     /**

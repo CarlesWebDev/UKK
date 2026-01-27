@@ -10,9 +10,33 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function ShowLoginStudent()
     {
-        //
+        if(auth()->guard('student')->check()) {
+            return redirect()->route('student.dashboard');
+        }
+        return view('auth.studentLogin');
+    }
+
+    public function Login(Request $request)
+    {
+        $credentials = $request->validate([
+            'nis' => 'required|string|min:10',
+            'password' => 'required|string|min:8',
+        ]);
+        if (auth()->guard('student')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('student.dashboard');
+        }
+        return back()->withErrors([
+            'nis' => 'The provided credentials do not match our records.',
+        ])->onlyInput('nis');
+
+    }
+
+    public function dashboard()
+    {
+        return view('student.dashboard');
     }
 
     /**
@@ -61,5 +85,13 @@ class StudentController extends Controller
     public function destroy(student $student)
     {
         //
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->guard('student')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }
