@@ -21,7 +21,7 @@ class StudentController extends Controller
     public function Login(Request $request)
     {
         $credentials = $request->validate([
-            'nis' => 'required|string|min:10',
+            'nis' => 'required|string|min:10|',
             'password' => 'required|string|min:8',
         ]);
         if (auth()->guard('student')->attempt($credentials)) {
@@ -37,6 +37,11 @@ class StudentController extends Controller
     public function dashboard()
     {
         return view('student.dashboard');
+    }
+
+    public function History()
+    {
+        return view('student.history');
     }
 
     /**

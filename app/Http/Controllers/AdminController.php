@@ -18,6 +18,25 @@ class AdminController extends Controller
         return view('auth.adminlogin');
     }
 
+    public function Login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string|min:8',
+        ]);
+        if (auth()->guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('admin.dashboard');
+        }
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -64,5 +83,12 @@ class AdminController extends Controller
     public function destroy(admin $admin)
     {
         //
+    }
+    public function logout(Request $request)
+    {
+        auth()->guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/admin/login');
     }
 }

@@ -11,14 +11,17 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+
         ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+            'session_key' => 'admin_session',
         ],
         'student' => [
             'driver' => 'session',
             'provider' => 'students',
+            'session_key' => 'student_session',
         ],
     ],
 

@@ -1,59 +1,55 @@
 @extends('layout.login_layout')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center px-4">
-    <div class="w-full max-w-md rounded-2xl  p-8">
+    <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="w-full max-w-md rounded-2xl  p-8">
 
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-semibold text-gray-800">Login Siswa</h1>
-            <p class="text-sm text-gray-500">Masukkan NIS dan password</p>
-        </div>
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-semibold text-gray-800">Login Siswa</h1>
+                <p class="text-sm text-gray-500">Masukkan NIS dan password</p>
+            </div>
 
-        <form action="{{ route('student.login') }}" method="POST" class="space-y-5">
-            @csrf
+            <form action="{{ route('student.login') }}" method="POST" class="space-y-5">
+                @csrf
 
-            <!-- NIS -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    NIS
-                </label>
-                <input
-                    type="text"
-                    name="nis"
-                    value="{{ old('nis') }}"
-                    placeholder="1234567890"
-                    class="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500
+                <!-- NIS -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        NIS
+                    </label>
+                    <input type="text" name="nis" value="{{ old('nis') }}" placeholder="1234567890"
+                        class="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500
                     @error('nis') border-red-500 focus:ring-red-500
-                    @enderror"
-                >
-                @error('nis')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                    @enderror">
+                    @error('nis')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Password
-                </label>
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    class="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500
-                    @error('password') border-red-500 focus:ring-red-500 @enderror"
-                >
-                @error('password')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Password
+                    </label>
+                    <input type="password" name="password" placeholder="••••••••"
+                        class="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500
+                    @error('password') border-red-500 focus:ring-red-500 @enderror">
+                    @error('password')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <button
-                type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition"
-            >
-                Login
-            </button>
-        </form>
+                <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition">
+                    Login
+                </button>
+            </form>
+
+            <div class="text-sm mt-10 text-center">
+                <p class="text-gray-600">Atau masuk sebagai</p>
+                <a href="{{ route('admin.login.form') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                    Admin
+                </a>
+            </div>
+        </div>
     </div>
-</div>
 @endsection

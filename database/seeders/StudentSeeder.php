@@ -14,6 +14,7 @@ class StudentSeeder extends Seeder
         //
         DB:: table('students')->insert([
             'nis' => '12345678910',
+            'name' => 'ahmad baijuri',
             'password' => Hash::make('studentexample123'),
             'created_at' => now(),
             'updated_at' => now(),
