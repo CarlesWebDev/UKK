@@ -1,49 +1,38 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{AdminController, StudentController};
 
 Route::get('/auth-redirect', function () {
     $intendedUrl = session()->get('url.intended');
 
-    // Cek jika URL mengandung 'admin', lempar ke route admin
     if ($intendedUrl && str_contains($intendedUrl, '/admin')) {
         return redirect()->route('admin.login.form');
     }
-    // Default ke siswa
     return redirect()->route('student.login.form');
 })->name('login');
 
 
 
-// Admin
-Route::get('/admin/login', [App\Http\Controllers\AdminController::class, 'ShowLoginForm'])->name('admin.login.index');
-Route::get('/admin/Login',[App\Http\Controllers\AdminController::class, 'ShowLoginForm'])->name('admin.login.form');
-Route::post('/Login', [App\Http\Controllers\AdminController::class, 'Login'])->name('admin.login');
+Route::view('/', 'LandingPage');
 
+Route::get('/admin/login', [AdminController::class, 'ShowLoginForm'])->name('admin.login.index');
+Route::get('/admin/Login', [AdminController::class, 'ShowLoginForm'])->name('admin.login.form');
+Route::post('/Login', [AdminController::class, 'Login'])->name('admin.login');
 
-// Student
-Route::get('Login',[App\Http\Controllers\StudentController::class, 'Login'])->name('student.login.process');
-// Route::get('/', [StudentController::class, 'showLoginStudent'])->name('student.login.form');
-Route::get('/', [StudentController::class, 'showLoginStudent'])->name('student.login.form');
+Route::get('/student/login', [StudentController::class, 'showLoginStudent'])->name('student.login.form');
 Route::post('/student/Login', [StudentController::class, 'Login'])->name('student.login');
 Route::get('/History', [StudentController::class, 'History'])->name('student.history');
 
-
-
-
-// Middleware Student
 Route::middleware('auth:student')->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
 });
 
-// Middleware Admin
 Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
-    Route::post('/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 });
-
-
 
 
 
@@ -86,4 +75,3 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 //     Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
 //     Route::post('/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('logout');
 // });
-
